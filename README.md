@@ -1,8 +1,6 @@
 # python-sockets
-##usage
-```
-python server.py
-
-python client.py
-
+## Usage
+You need to have python installed and running on your machine
+```bash
+pip install foobar
 ```
