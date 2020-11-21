@@ -1,0 +1,14 @@
+import PIL
+from PIL import Image
+import os
+
+#opening with PIL and compressing the img
+img = Image.open('test_tmp.jpg')
+heigth,width = img.size
+img = img.resize((heigth,width), PIL.Image.ANTIALIAS)
+img.save('img_resized.jpg')
+img.close()
+
+#remove the temp images
+os.remove('test_tmp.jpg')
+os.remove('program_temp.py')
