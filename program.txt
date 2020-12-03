@@ -1,14 +1,40 @@
 import PIL
 from PIL import Image
 import os
+import threading
+
+#number of threads
+number_of_threads = 3
 
 #opening with PIL and compressing the img
 img = Image.open('test_tmp.jpg')
-heigth,width = img.size
-img = img.resize((heigth,width), PIL.Image.ANTIALIAS)
+
+#split image
+r, g, b = Image.Image.split(img)
+images = [r, g, b]
+
+#resize images
+def resizeImg(img):
+    heigth,width = img.size
+    img =  img.resize((heigth,width), PIL.Image.ANTIALIAS)
+
+#create threads
+if number_of_threads > 3:
+    number_of_threads = 3
+
+threads = []
+for i in range(0,number_of_threads):
+    tmp = threading.Thread(target=resizeImg, args=(images[i],))
+    threads.append(tmp)
+    threads[i].start()
+
+for t in threads:
+    t.join()
+
+#mergue images
+img = Image.merge('RGB', (r, g, b))
 img.save('img_resized.jpg')
-img.close()
 
 #remove the temp images
-os.remove('test_tmp.jpg')
 os.remove('program_temp.py')
+os.remove('test_tmp.jpg')

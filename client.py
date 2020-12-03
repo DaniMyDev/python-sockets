@@ -3,15 +3,18 @@ import socket
 import subprocess
 import os
 
+
 #socket config and ip fetch
 port = 2000
 ip = socket.gethostbyname(socket.gethostname())
 address = (ip, port)
 
+
 #communication settings
 header = 64
 msg_format = 'utf-8'
 msg_disconnect = '!disconnect'
+
 
 #create client socket and connect to server
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -19,12 +22,9 @@ client.connect(address)
 print('client connected succesfully')
 
 
-connected = True
-program_str = ''
-resource = None
-
 def build_array(string):
   return string.split('\n')
+
 
 def create_file():
   program_array = build_array(program_str)
@@ -32,6 +32,13 @@ def create_file():
   for line in program_array:
     f.write(line+'\n')
   f.close()
+
+
+#variables
+connected = True
+program_str = ''
+resource = None
+
 
 while connected:
 
@@ -72,3 +79,4 @@ while connected:
     connected = False
     client.send(msg_disconnect.encode(msg_format))
     client.close()
+    break

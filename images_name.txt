@@ -1,0 +1,3 @@
+img/test.jpg
+img/python.jpg
+img/banana.jpg
